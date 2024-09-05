@@ -22,9 +22,12 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install frontend dependencies
+      - name: Clean frontend dependencies
         working-directory: ./frontend
-        run: npm install
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+          npm install
 
       - name: Install backend dependencies
         working-directory: ./backend
