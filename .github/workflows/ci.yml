@@ -45,6 +45,7 @@ jobs:
         run: npm run dev &
 
       - name: Run Jest tests
+        working-directory: ./backend
         run: npm test
         
   notify:
