@@ -40,6 +40,9 @@ jobs:
       - name: Start frontend server
         working-directory: ./frontend
         run: npm run dev &
+
+      - name: Run Jest tests
+        run: npm test
         
   notify:
     name: Notify Results
