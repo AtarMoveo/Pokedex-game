@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'
+          node-version: '20'
 
       - name: Install frontend dependencies
         working-directory: ./frontend
@@ -31,11 +31,11 @@ jobs:
         run: npm install
 
       - name: Start backend server
-        working-directory: ./pokemon-server
+        working-directory: ./backend
         run: npm start &
       
       - name: Start frontend server
-        working-directory: ./pokemon-game
+        working-directory: ./frontend
         run: npm start &
         
       # Wait for the frontend server to be available
