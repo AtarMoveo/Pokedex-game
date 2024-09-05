@@ -26,13 +26,25 @@ jobs:
         working-directory: ./frontend
         run: npm install
 
-      - name: Run Cypress tests
-        working-directory: ./frontend
-        run: npx cypress run
-
       - name: Install backend dependencies
         working-directory: ./backend
         run: npm install
+
+      - name: Start backend server
+        working-directory: ./pokemon-server
+        run: npm start &
+      
+      - name: Start frontend server
+        working-directory: ./pokemon-game
+        run: npm start &
+        
+      # Wait for the frontend server to be available
+      - name: Wait for frontend to be ready
+        run: npx wait-on http://localhost:5173
+
+      - name: Run Cypress tests
+        working-directory: ./frontend
+        run: npx cypress run
         
   notify:
     name: Notify Results
