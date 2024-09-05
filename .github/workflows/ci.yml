@@ -22,13 +22,22 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install frontend dependencies
+      - name: Clean frontend dependencies
         working-directory: ./frontend
-        run: npm install
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+          npm install
 
       - name: Install backend dependencies
         working-directory: ./backend
         run: npm install
+
+      - name: Set backend environment variables
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}   # Store this as a secret in GitHub settings
+          USER_POOL_ID: ${{ secrets.USER_POOL_ID }} # Store this as a secret in GitHub settings
+        run: echo "Environment variables set for AWS"
 
       - name: Start backend server
         working-directory: ./backend
