@@ -33,14 +33,11 @@ jobs:
         working-directory: ./backend
         run: npm install
 
-      - name: Set backend environment variables
-        env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}   # Store this as a secret in GitHub settings
-          USER_POOL_ID: ${{ secrets.USER_POOL_ID }} # Store this as a secret in GitHub settings
-        run: echo "Environment variables set for AWS"
-
       - name: Start backend server
         working-directory: ./backend
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          USER_POOL_ID: ${{ secrets.USER_POOL_ID }}
         run: npm run dev &
       
       - name: Start frontend server
