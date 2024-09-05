@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -22,8 +25,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test
+      # Cypress specific setup
+      - name: Install Cypress
+        run: npm install cypress --save-dev
+
+      - name: Run Cypress tests
+        run: npx cypress run
 
   notify:
     name: Notify Results
@@ -38,4 +45,3 @@ jobs:
       - name: Notify failure
         if: ${{ failure() }}
         run: echo "One or more checks failed. Please review the reports."
-
