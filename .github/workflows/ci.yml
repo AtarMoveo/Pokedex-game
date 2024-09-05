@@ -47,6 +47,13 @@ jobs:
       - name: Run Cypress tests
         working-directory: ./frontend
         run: npx cypress run
+
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-screenshots
+          path: frontend/cypress/screenshots
         
   notify:
     name: Notify Results
