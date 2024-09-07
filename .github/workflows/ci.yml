@@ -68,19 +68,28 @@ jobs:
           USER_TOKEN: ${{ secrets.USER_TOKEN }}
           CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
         run: |
-          # npm test -- src/api/user/user.spec.ts
+          # Run your tests here
           npm test -- src/api/pokemon/pokemon.spec.ts
+          
+  horusec-security:
+    name: Horusec Security Scan
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      - name: Install Horusec
-        run: curl -fsSL https://horusec.io/bin/install.sh | bash
-
-      - name: Run Horusec Scan
-        run: horusec start -p . --horusec-url="http://your-platform-url.com" --log-level=error --enable-git-history=false
+      - name: Running Horusec Security
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest
+          horusec start -p="./" -e="true"        
 
   notify:
     name: Notify Results
     runs-on: ubuntu-latest
-    needs: [test]
+    needs: [test, horusec-security]
     
     steps:
       - name: Notify success
