@@ -21,7 +21,12 @@ jobs:
           POSTGRES_USER: ${{ secrets.DB_USER }}
         ports: 
           - 5432:5432
-          
+        options: >-
+          --health-cmd "pg_isready -U ${{ secrets.DB_USER }}"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -42,17 +47,6 @@ jobs:
         working-directory: ./backend
         run: npm install
 
-      # - name: Start backend server
-      #   working-directory: ./backend
-      #   env:
-      #     AWS_REGION: ${{ secrets.AWS_REGION }}
-      #     USER_POOL_ID: ${{ secrets.USER_POOL_ID }}
-      #   run: npm run dev &
-      
-      - name: Start frontend server
-        working-directory: ./frontend
-        run: npm run dev &
-          
       - name: Run Prisma Migrations
         working-directory: ./backend
         env: 
@@ -65,6 +59,18 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }} 
         run: npm run seed
 
+      - name: Start frontend server
+        working-directory: ./frontend
+        run: npm run dev &
+
+      - name: Wait for the backend server to be ready
+        working-directory: ./backend
+        run: |
+          until nc -zv localhost 3000; do
+            echo "Waiting for backend server to be ready..."
+            sleep 5
+          done
+
       - name: Run Jest tests
         working-directory: ./backend
         env:
@@ -75,7 +81,7 @@ jobs:
           USER_TOKEN: ${{ secrets.USER_TOKEN }}
           CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
         run: npm test
-        
+
   notify:
     name: Notify Results
     runs-on: ubuntu-latest
