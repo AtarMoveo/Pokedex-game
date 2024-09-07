@@ -58,11 +58,16 @@ jobs:
           echo "    ports:" >> docker-compose.yml
           echo "      - \"5432:5432\"" >> docker-compose.yml
 
-      # - name: Run Prisma Migrations
-      #   working-directory: ./backend
-      #   env: 
-      #     DATABASE_URL: ${{ secrets.DATABASE_URL }} 
-      #   run: npx prisma migrate deploy
+
+      - name: Start Docker Compose
+        run: |
+            docker-compose up -d
+          
+      - name: Run Prisma Migrations
+        working-directory: ./backend
+        env: 
+          DATABASE_URL: ${{ secrets.DATABASE_URL }} 
+        run: npx prisma migrate deploy
 
       - name: Run Jest tests
         working-directory: ./backend
