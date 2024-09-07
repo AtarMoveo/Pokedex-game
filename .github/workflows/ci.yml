@@ -84,13 +84,7 @@ jobs:
       - name: Running Horusec Security
         run: |
           curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest-beta
-          echo "======"
-          ls -l
-          echo "=======2"
-          horusec start -p="./"  
-          echo "=======3"
-          horusec start
-          echo "=======4"
+          horusec start -p="./" -e      
 
   notify:
     name: Notify Results
