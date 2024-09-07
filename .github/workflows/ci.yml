@@ -71,13 +71,11 @@ jobs:
           # npm test -- src/api/user/user.spec.ts
           npm test -- src/api/pokemon/pokemon.spec.ts
 
-      # - name: Run Horusec SAST
-      #   uses: horusec/horusec-action@v2
-      #   with:
-      #     horusec_version: 'v2.3.1'
-      #   env:
-      #     HORUSEC_AUTH_TOKEN: ${{ secrets.HORUSEC_AUTH_TOKEN }}
-      #   continue-on-error: false
+      - name: Install Horusec
+        run: curl -fsSL https://horusec.io/bin/install.sh | bash
+
+      - name: Run Horusec Scan
+        run: horusec start -p . --horusec-url="http://your-platform-url.com" --log-level=error --enable-git-history=false
 
   notify:
     name: Notify Results
