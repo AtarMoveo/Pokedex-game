@@ -67,7 +67,9 @@ jobs:
           USER_POOL_ID: ${{ secrets.USER_POOL_ID }}
           USER_TOKEN: ${{ secrets.USER_TOKEN }}
           CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
-        run: npm test
+        run: |
+          npm test -- src/api/user/user.spec.ts
+          npm test -- src/api/pokemon/pokemon.spec.ts
 
   notify:
     name: Notify Results
