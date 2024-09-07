@@ -82,16 +82,28 @@ async function createUserPokemons() {
         await prisma.userPokemons.createMany({
             data: [
                 {
+                    userId: 9,
+                    pokemonId: 25,
+                },
+                {
+                    userId: 9,
+                    pokemonId: 37,
+                },
+                {
+                    userId: 9,
+                    pokemonId: 42,
+                },
+                {
                     userId: 1,
                     pokemonId: 25,
                 },
                 {
                     userId: 1,
-                    pokemonId: 22,
+                    pokemonId: 37,
                 },
                 {
                     userId: 1,
-                    pokemonId: 30,
+                    pokemonId: 42,
                 },
             ]
         })
