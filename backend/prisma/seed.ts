@@ -6,7 +6,8 @@ const prisma = new PrismaClient()
 const defaultImg = 'public/assets/img/Poke_Ball.webp'
 
 createPokemons()
-// createUserPokemons()
+createUsers()
+createUserPokemons()
 
 async function createPokemons() {
     try {
@@ -48,6 +49,31 @@ async function savePokemons(pokemons: Omit<PrismaPokemon, 'id'>[]) {
         console.error('Error saving Pokemons:', error)
     } finally {
         await prisma.$disconnect()
+    }
+}
+
+async function createUsers() {
+    try {
+        await prisma.user.createMany({
+            data: [
+                {
+                    id: 1,
+                    name: 'f3e468d2-9081-70d2-f9ed-45ab6346ad08',
+                    email: 'atarm@moveohls.com',
+                    cognitoId: 'f3e468d2-9081-70d2-f9ed-45ab6346ad08',
+                },
+                {
+                    id: 9,
+                    name: 'a3740872-8031-7029-afc4-9a66d9531d17',
+                    email: 'atarmor92@gmail.com',
+                    cognitoId: 'a3740872-8031-7029-afc4-9a66d9531d17',
+                },
+
+            ]
+        })
+        console.log('Users created successfully')
+    } catch (error) {
+        console.error('Error creating users', error)
     }
 }
 
