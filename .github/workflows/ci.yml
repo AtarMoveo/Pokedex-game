@@ -62,6 +62,7 @@ jobs:
       - name: Run Jest tests
         working-directory: ./backend
         env:
+          CI_TEST: true
           DATABASE_URL: ${{ secrets.DATABASE_URL }} 
           AWS_REGION: ${{ secrets.AWS_REGION }}
           USER_POOL_ID: ${{ secrets.USER_POOL_ID }}
