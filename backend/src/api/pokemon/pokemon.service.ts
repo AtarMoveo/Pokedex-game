@@ -1,6 +1,7 @@
 import { Pokemon, PrismaClient } from "@prisma/client";
 import { SortBy } from "../../data/types/pokemon";
 import { userPokemonsService } from "../user-pokemons/user-pokemons.service";
+import { secureMathRandom } from "../../util/util";
 
 const prisma = new PrismaClient()
 
@@ -80,7 +81,7 @@ export async function fetchRandomPokemon(userId: number): Promise<Pokemon | null
 
         if (availablePokemons.length === 0) return null
 
-        const randomIndex = Math.floor(Math.random() * availablePokemons.length)
+        const randomIndex = Math.floor(secureMathRandom() * availablePokemons.length)
         return availablePokemons[randomIndex]
     } catch (error) {
         console.error('Error fetching random Pokemon:', error)

@@ -109,7 +109,7 @@ export function Fight({ userId }: FightProps) {
 
     function onCatch() {
         const catchRate = (opponentPokemon?.currHpLevel! < 0.2 * opponentPokemon?.hpLevel!) ? 0.4 : 0.2
-        const isCaught = Math.random() < catchRate
+        const isCaught = utilService.secureMathRandom() < catchRate
         if (isCaught) {
             const card = opponentCardRef.current
             if (card) {

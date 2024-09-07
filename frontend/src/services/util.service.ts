@@ -4,15 +4,16 @@ export const utilService = {
     saveToStorage,
     loadFromStorage,
     triggerAnimation,
-    getAccessToken
+    getAccessToken,
+    secureMathRandom
 }
 
 function getRandomInt(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min)) + min
+    return Math.floor(secureMathRandom() * (max - min)) + min
 }
 
 function getRandomAttackFactor() {
-    return Math.random() * (0.7 - 0.3) + 0.3
+    return secureMathRandom() * (0.7 - 0.3) + 0.3
 }
 
 function saveToStorage(key: string, value: any): void {
@@ -40,4 +41,10 @@ function getAccessToken(): string | null {
         }
     }
     return null
+}
+
+function secureMathRandom() {
+    const array = new Uint32Array(1); // Create a 32-bit unsigned integer array  
+    window.crypto.getRandomValues(array); // Fill the array with random values  
+    return array[0] / (0xFFFFFFFF + 1); // Normalize the value to be between 0 and 1
 }
