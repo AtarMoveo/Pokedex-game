@@ -44,6 +44,10 @@ jobs:
         working-directory: ./frontend
         run: npm run dev &
 
+      - name: Run Prisma Migrations
+        working-directory: ./backend
+        run: npx prisma migrate deploy
+
       - name: Run Jest tests
         working-directory: ./backend
         env:
