@@ -5,9 +5,18 @@ const prisma = new PrismaClient()
 
 const defaultImg = 'public/assets/img/Poke_Ball.webp'
 
-createPokemons()
-createUsers()
-createUserPokemons()
+addDataToDB()
+
+async function addDataToDB() {
+    try {
+        await createPokemons()
+        await createUsers()
+        await createUserPokemons()
+        console.log('Data was inserted fully')
+    } catch (err) {
+        console.error('Error inserting data:', err)
+    }
+}
 
 async function createPokemons() {
     try {
