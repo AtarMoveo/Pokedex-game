@@ -12,7 +12,16 @@ jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
-
+    services: 
+      postgres: 
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+        ports: 
+          - 5432:5432
+          
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -43,25 +52,6 @@ jobs:
       - name: Start frontend server
         working-directory: ./frontend
         run: npm run dev &
-         
-      - name: Set up Docker Compose
-        run: |
-          echo "version: '3.8'" > docker-compose.yml
-          echo "services:" >> docker-compose.yml
-          echo "  db:" >> docker-compose.yml
-          echo "    image: postgres:15-alpine" >> docker-compose.yml
-          echo "    container_name: db" >> docker-compose.yml
-          echo "    environment:" >> docker-compose.yml
-          echo "      POSTGRES_DB: ${{ secrets.DB_NAME }}" >> docker-compose.yml
-          echo "      POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}" >> docker-compose.yml
-          echo "      POSTGRES_USER: ${{ secrets.DB_USER }}" >> docker-compose.yml
-          echo "    ports:" >> docker-compose.yml
-          echo "      - \"5432:5432\"" >> docker-compose.yml
-
-
-      - name: Start Docker Compose
-        run: |
-            docker-compose up -d
           
       - name: Run Prisma Migrations
         working-directory: ./backend
