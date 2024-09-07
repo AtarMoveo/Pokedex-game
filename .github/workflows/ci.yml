@@ -58,14 +58,6 @@ jobs:
         working-directory: ./frontend
         run: npm run dev &
 
-      - name: Wait for the backend server to be ready
-        working-directory: ./backend
-        run: |
-          until nc -zv localhost 3000; do
-            echo "Waiting for backend server to be ready..."
-            sleep 5
-          done
-
       - name: Run Jest tests
         working-directory: ./backend
         env:
