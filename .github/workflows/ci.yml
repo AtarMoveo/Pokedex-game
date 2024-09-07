@@ -33,12 +33,12 @@ jobs:
         working-directory: ./backend
         run: npm install
 
-      - name: Start backend server
-        working-directory: ./backend
-        env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          USER_POOL_ID: ${{ secrets.USER_POOL_ID }}
-        run: npm run dev &
+      # - name: Start backend server
+      #   working-directory: ./backend
+      #   env:
+      #     AWS_REGION: ${{ secrets.AWS_REGION }}
+      #     USER_POOL_ID: ${{ secrets.USER_POOL_ID }}
+      #   run: npm run dev &
       
       - name: Start frontend server
         working-directory: ./frontend
