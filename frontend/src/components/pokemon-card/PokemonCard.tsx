@@ -21,7 +21,7 @@ export function PokemonCard({ pokemon, setSelectedPokemon, userPokemonsIds }: Po
                 <PowerIcon />
             </div>
         </div>
-        <h5 className="pokemon-id">#{pokemon.id}</h5>
+        <h5 className="pokemon-id">#{pokemon.id.toString().padStart(4, '0')}</h5>
         <h3 className="pokemon-name">{pokemon.name}</h3>
     </StyledPokemonCard>
 }

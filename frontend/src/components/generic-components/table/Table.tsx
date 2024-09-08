@@ -58,6 +58,9 @@ const GenericTable = ({
       </div>
       )
     }
+    if (column.id === 'id') {
+      return `#${value.toString().padStart(4, '0')}`
+    }
     return typeof value === 'object' ? JSON.stringify(value) : value
   }
 

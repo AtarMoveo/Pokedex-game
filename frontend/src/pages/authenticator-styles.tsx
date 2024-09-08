@@ -27,6 +27,8 @@ export const StyledAuthenticator = styled.main`
 
             [data-amplify-router] {
                 background: url(${LoginImg});
+                background-size: cover;
+                background-position: center;
                 height: 100%;
                 display: grid;
                 place-items: center;
