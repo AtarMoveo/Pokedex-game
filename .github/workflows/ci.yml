@@ -68,8 +68,8 @@ jobs:
           USER_TOKEN: ${{ secrets.USER_TOKEN }}
           CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
         run: |
-          # npm test -- src/api/pokemon/pokemon.spec.ts
-          npm test --runInBand
+          npm test -- src/api/pokemon/pokemon.spec.ts
+          # npm test --runInBand
           
   horusec-security:
     name: Horusec Security Scan
